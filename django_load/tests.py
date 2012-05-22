@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import with_statement
 from django_load.core import load, iterload, load_object, iterload_objects
+from django.utils.importlib import import_module
 from testproject.core import pool
 from unittest import TestCase
 import sys
@@ -42,6 +43,7 @@ class DjangoLoad(TestCase):
         self.assertEqual(sorted(pool['plugins']), sorted(['everything', 'plugin']))
 
     def test_brokenimport(self):
+        self.assertRaises(ImportError, import_module, "nowhere.non_existent_module")
         self.assertRaises(ImportError, load, 'brokenimport', failfast=False)
         
     def test_extensions(self):
