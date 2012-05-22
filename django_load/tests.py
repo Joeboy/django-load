@@ -40,6 +40,9 @@ class DjangoLoad(TestCase):
         self.assertTrue('plugins' in pool, pool)
         self.assertEqual(len(pool['plugins']), 2, pool)
         self.assertEqual(sorted(pool['plugins']), sorted(['everything', 'plugin']))
+
+    def test_brokenimport(self):
+        self.assertRaises(ImportError, load, 'brokenimport', failfast=False)
         
     def test_extensions(self):
         load('extensions')
